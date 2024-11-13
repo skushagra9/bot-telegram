@@ -2,7 +2,7 @@ import { getContractBalance, getWalletBalance } from '../server/balance';
 import { getUser } from '../server/user';
 
 // Handles the /start command
-export const handleCommands = async(bot: any) => {
+export const handleCommands = async (bot: any) => {
     bot.onText(/\/start/, async (msg: any) => {
         const chatId = msg.chat.id;
         const balance = await getWalletBalance(chatId);
@@ -10,7 +10,7 @@ export const handleCommands = async(bot: any) => {
         const { user, message } = await getUser(chatId);
         const welcomeMessage = `
       Welcome to PERPbot 🚀
-      You currently have ${balance} in your wallet, and ${contractBalance} in Deposit Contract. To start trading, deposit ETH to your wallet address:
+      You currently have ${balance} in your wallet, and ${contractBalance} in Deposit Contract.
         ${user.walletAddress}
 
       (tap to copy)
@@ -20,15 +20,21 @@ export const handleCommands = async(bot: any) => {
         const options = {
             reply_markup: {
                 inline_keyboard: [
+                    // [
+                    //     { text: 'Buy', callback_data: 'buy' },
+                    //     { text: 'Sell', callback_data: 'sell' }
+                    // ],
                     [
-                        { text: 'Buy', callback_data: 'buy' },
-                        { text: 'Sell & Manage', callback_data: 'sell_manage' }
+                        { text: 'Trade on BTC', callback_data: 'trade_on_btc' },
                     ],
                     [
-                        { text: 'Help', callback_data: 'help' },
-                        { text: 'Refer Friends', callback_data: 'refer_friends' },
-                        { text: 'Alerts', callback_data: 'alerts' }
+                        { text: 'Manage', callback_data: 'manage' },
                     ],
+                    // [
+                    //     { text: 'Help', callback_data: 'help' },
+                    //     { text: 'Refer Friends', callback_data: 'refer_friends' },
+                    //     { text: 'Alerts', callback_data: 'alerts' }
+                    // ],
                     [
                         { text: 'Wallet', callback_data: 'wallet' },
                         { text: 'Settings', callback_data: 'settings' }
